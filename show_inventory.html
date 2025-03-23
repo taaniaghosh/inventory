@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Inventory</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        table { width: 80%; margin: 20px auto; border-collapse: collapse; }
+        th, td { border: 1px solid black; padding: 10px; }
+        th { background-color: lightgray; }
+        a { display: block; margin: 20px; }
+    </style>
+    
+</head>
+<body>
+    <h2>Inventory List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody id="inventoryTable"></tbody>
+    </table>
+    <a href="update_inventory.html">Go to Update Inventory</a>
+
+    <script>
+        async function fetchInventory() {
+            const response = await fetch("/api/inventory");
+            const data = await response.json();
+            const tableBody = document.getElementById("inventoryTable");
+
+            tableBody.innerHTML = data.map(item => `
+                <tr>
+                    <td>${item.id}</td>
+                    <td>${item.name}</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.price}</td>
+                </tr>
+            `).join("");
+        }
+
+        fetchInventory();
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Inventory</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        form { margin: 20px auto; width: 50%; display: flex; flex-direction: column; }
+        input, button { margin: 10px; padding: 10px; }
+        a { display: block; margin: 20px; }
+    </style>
+</head>
+<body>
+    <h2>Update Inventory</h2>
+    <form id="updateForm">
+        <input type="text" id="itemId" placeholder="Item ID">
+        <input type="text" id="itemName" placeholder="New Name">
+        <input type="number" id="itemQuantity" placeholder="New Quantity">
+        <input type="number" id="itemPrice" placeholder="New Price">
+        <button type="button" onclick="updateItem()">Update Item</button>
+    </form>
+    <a href="show_inventory.html">Go to Show Inventory</a>
+
+    <script>
+        async function updateItem() {
+            const id = document.getElementById("itemId").value;
+            const name = document.getElementById("itemName").value;
+            const quantity = document.getElementById("itemQuantity").value;
+            const price = document.getElementById("itemPrice").value;
+
+            await fetch(`/api/inventory/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, quantity, price })
+            });
+
+            alert("Item updated successfully!");
+        }
+    </script>
+</body>
+</html>
